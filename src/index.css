@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============ THEME TOKENS ============ */
+/* Light (default): creamy white + orange. Dark: warm charcoal + orange. */
+:root {
+  --color-base: 251 246 237;       /* #FBF6ED creamy white */
+  --color-panel: 255 255 255;      /* #FFFFFF */
+  --color-panel2: 245 237 221;     /* #F5EDDD */
+  --color-hairline: 227 216 195;   /* #E3D8C3 */
+  --color-ink: 36 27 17;           /* #241B11 */
+  --color-muted: 108 93 71;        /* #6C5D47 */
+  --color-faint: 156 140 112;      /* #9C8C70 */
+  --color-accent: 237 96 26;       /* #ED601A orange */
+  --color-accent-dim: 199 76 15;   /* #C74C0F */
+  --color-accent2: 191 66 20;      /* #BF4214 secondary warm accent */
+  --color-accent2-dim: 138 47 15;  /* #8A2F0F */
+  --color-on-accent: 255 250 243;  /* text on solid orange */
+}
+
+[data-theme="dark"] {
+  --color-base: 23 18 12;          /* #17120C warm near-black */
+  --color-panel: 32 25 16;         /* #201910 */
+  --color-panel2: 40 31 19;        /* #281F13 */
+  --color-hairline: 59 46 28;      /* #3B2E1C */
+  --color-ink: 245 237 224;        /* #F5EDE0 */
+  --color-muted: 184 166 138;      /* #B8A68A */
+  --color-faint: 124 110 88;       /* #7C6E58 */
+  --color-accent: 255 138 61;      /* #FF8A3D orange, brighter for dark bg */
+  --color-accent-dim: 232 108 25;  /* #E86C19 */
+  --color-accent2: 255 108 61;     /* #FF6C3D warm rust-orange */
+  --color-accent2-dim: 189 74 33;  /* #BD4A21 */
+  --color-on-accent: 23 15 8;      /* dark text on solid orange */
+}
+
+::selection {
+  background: rgb(var(--color-accent));
+  color: rgb(var(--color-on-accent));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background-color: rgb(var(--color-base));
+  color: rgb(var(--color-ink));
+  transition: background-color 0.35s ease, color 0.35s ease;
+  background-image: radial-gradient(
+    circle at 15% 0%,
+    rgb(var(--color-accent) / 0.08),
+    transparent 45%
+  );
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--color-base));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-hairline));
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-accent));
+}
+
+.section-num {
+  font-family: "JetBrains Mono", monospace;
+  color: rgb(var(--color-accent));
+}
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid rgb(var(--color-accent));
+  outline-offset: 3px;
+}
+
+/* ============ CUSTOM SOLID CURSOR ============ */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+
+.container-x {
+  width: 100%;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-x {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
