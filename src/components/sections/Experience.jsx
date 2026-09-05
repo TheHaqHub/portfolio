@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { experience } from "../../lib/data";
 import Reveal from "../Reveal";
+import ExperienceCard from "./ExperienceCard";
+import MobileCarousel from "../MobileCarousel";
 
 export default function Experience() {
   return (
@@ -13,7 +15,17 @@ export default function Experience() {
           </h2>
         </Reveal>
 
-        <div className="space-y-6">
+        {/* Mobile: swipeable cards, details collapsed by default */}
+        <div className="md:hidden">
+          <MobileCarousel
+            items={experience}
+            keyExtractor={(exp) => exp.id}
+            renderItem={(exp) => <ExperienceCard exp={exp} />}
+          />
+        </div>
+
+        {/* Desktop: full stacked detail list */}
+        <div className="hidden md:block space-y-6">
           {experience.map((exp, i) => (
             <motion.div
               key={exp.id}

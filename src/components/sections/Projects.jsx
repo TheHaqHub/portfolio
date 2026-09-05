@@ -1,6 +1,7 @@
 import { projects } from "../../lib/data";
 import ProjectCard from "./ProjectCard";
 import Reveal from "../Reveal";
+import MobileCarousel from "../MobileCarousel";
 
 export default function Projects() {
   return (
@@ -17,7 +18,17 @@ export default function Projects() {
           </p>
         </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Mobile: swipeable carousel */}
+        <div className="sm:hidden">
+          <MobileCarousel
+            items={projects}
+            keyExtractor={(p) => p.id}
+            renderItem={(p, i) => <ProjectCard project={p} index={i} />}
+          />
+        </div>
+
+        {/* Tablet/desktop: grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p, i) => (
             <ProjectCard key={p.id} project={p} index={i} />
           ))}

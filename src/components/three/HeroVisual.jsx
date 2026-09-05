@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import MobileHeroCode from "./MobileHeroCode";
 
 function StaticSignalMark({ reduced }) {
   return (
@@ -119,6 +120,14 @@ export default function HeroVisual({ scrollProgress = 0 }) {
       sceneRef.current.setScrollT(scrollProgress);
     }
   }, [scrollProgress]);
+
+  if (mobile) {
+    return (
+      <div className="w-full">
+        <MobileHeroCode />
+      </div>
+    );
+  }
 
   if (useStatic) {
     return (

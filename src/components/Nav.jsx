@@ -42,6 +42,13 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <motion.header
       initial={{ y: -60, opacity: 0 }}
@@ -84,12 +91,26 @@ export default function Nav() {
         <div className="md:hidden flex items-center gap-4">
         <ThemeToggle />
         <button
-          className="text-ink"
+          className="relative z-[110] text-ink flex flex-col items-end gap-[5px] w-6"
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
         >
-          <span className="font-mono text-sm">{open ? "close" : "menu"}</span>
+          <motion.span
+            animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="h-[1.5px] w-6 bg-current"
+          />
+          <motion.span
+            animate={open ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.15 }}
+            className="h-[1.5px] w-4 bg-current"
+          />
+          <motion.span
+            animate={open ? { rotate: -45, y: -6, width: 24 } : { rotate: 0, y: 0, width: 6 }}
+            transition={{ duration: 0.25 }}
+            className="h-[1.5px] bg-current"
+          />
         </button>
         </div>
       </nav>
@@ -97,21 +118,44 @@ export default function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="md:hidden border-t border-hairline bg-base overflow-hidden"
+            initial={{ clipPath: "circle(0% at 100% 0%)" }}
+            animate={{ clipPath: "circle(150% at 100% 0%)" }}
+            exit={{ clipPath: "circle(0% at 100% 0%)" }}
+            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+            className="md:hidden fixed inset-0 z-[100] bg-base"
           >
-            <div className="container-x py-4 flex flex-col gap-4 font-mono text-sm text-muted">
-              {LINKS.map((l) => (
-                <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="hover:text-signal">
-                  {l.label}
-                </a>
-              ))}
-              <a href={profile.github} target="_blank" rel="noreferrer" className="text-signal">
-                GitHub ↗
-              </a>
+            <div className="container-x h-full flex flex-col justify-center pb-20">
+              <p className="font-mono text-xs text-signal mb-8">// navigate</p>
+              <nav className="flex flex-col gap-1">
+                {LINKS.map((l, i) => (
+                  <motion.a
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                    className="group flex items-baseline gap-4 py-3 border-b border-hairline"
+                  >
+                    <span className="font-mono text-xs text-faint">0{i + 1}</span>
+                    <span className="font-display text-4xl text-ink group-active:text-signal transition-colors">
+                      {l.label}
+                    </span>
+                  </motion.a>
+                ))}
+              </nav>
+
+              <motion.a
+                href={profile.github}
+                target="_blank"
+                rel="noreferrer"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.5 }}
+                className="mt-10 font-mono text-sm text-signal inline-flex items-center gap-1.5"
+              >
+                github.com/TheHaqHub ↗
+              </motion.a>
             </div>
           </motion.div>
         )}

@@ -86,13 +86,15 @@ export default function GithubSection() {
           </div>
 
           {!chartFailed ? (
-            <img
-              src={`https://ghchart.rshah.org/ed601a/${profile.githubUser}`}
-              alt={`GitHub contribution chart for ${profile.githubUser}`}
-              className="w-full h-auto"
-              loading="lazy"
-              onError={() => setChartFailed(true)}
-            />
+            <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+              <img
+                src={`https://ghchart.rshah.org/ed601a/${profile.githubUser}`}
+                alt={`GitHub contribution chart for ${profile.githubUser}`}
+                className="h-[100px] sm:h-auto sm:w-full max-w-none sm:max-w-full"
+                loading="lazy"
+                onError={() => setChartFailed(true)}
+              />
+            </div>
           ) : (
             <div className="py-10 text-center text-muted text-sm">
               Live contribution graph unavailable right now — view activity

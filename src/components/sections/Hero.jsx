@@ -80,7 +80,7 @@ export default function Hero({ scrollProgress }) {
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
-          className="relative h-[360px] md:h-[440px]"
+          className="relative h-auto md:h-[440px]"
         >
           <HeroVisual scrollProgress={scrollProgress} />
         </motion.div>

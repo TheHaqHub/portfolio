@@ -4,20 +4,12 @@ import { useReducedMotion } from "../hooks/useReducedMotion";
 
 export default function Preloader({ onDone }) {
   const reduced = useReducedMotion();
-  const [skip] = useState(() => {
-    if (typeof window === "undefined") return false;
-    try {
-      return sessionStorage.getItem("preloaded") === "1";
-    } catch {
-      return false;
-    }
-  });
   const [progress, setProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
-  const [done, setDone] = useState(skip || reduced);
+  const [done, setDone] = useState(reduced);
 
   useEffect(() => {
-    if (skip || reduced) {
+    if (reduced) {
       onDone?.();
       return;
     }
@@ -34,15 +26,10 @@ export default function Preloader({ onDone }) {
     }, 100);
 
     return () => window.clearInterval(progressInterval);
-  }, [skip, reduced, onDone]);
+  }, [reduced, onDone]);
 
   useEffect(() => {
     if (!exiting) return;
-    try {
-      sessionStorage.setItem("preloaded", "1");
-    } catch {
-      /* no-op */
-    }
     const t = window.setTimeout(() => {
       setDone(true);
       onDone?.();
@@ -83,17 +70,27 @@ export default function Preloader({ onDone }) {
           style={{ marginBottom: "clamp(1rem, 4vw, 2.25rem)" }}
         />
 
-        <motion.h1
-          initial={{ opacity: 0, letterSpacing: "0.15em" }}
+        {/* code-styled reveal — reads as a JSX component tag */}
+        <motion.div
+          initial={{ opacity: 0, letterSpacing: "0.1em" }}
           animate={{
             opacity: exiting ? 0 : 1,
-            letterSpacing: exiting ? "0.15em" : "0em",
+            letterSpacing: exiting ? "0.1em" : "0em",
           }}
           transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-          className="font-display font-bold text-[13vw] sm:text-7xl md:text-8xl leading-none tracking-tight text-ink text-center px-6"
+          className="font-mono font-bold text-[9vw] sm:text-6xl md:text-7xl leading-none tracking-tight text-center px-6 break-words"
         >
-          ABDUL HAQ
-        </motion.h1>
+          <span className="text-signal">&lt;</span>
+          <span className="text-ink">AbdulHaq</span>
+          <span className="text-signal"> /&gt;</span>
+          <motion.span
+            className="inline-block text-signal"
+            animate={{ opacity: [1, 1, 0, 0] }}
+            transition={{ duration: 1, repeat: Infinity, times: [0, 0.5, 0.5, 1] }}
+          >
+            _
+          </motion.span>
+        </motion.div>
 
         {/* thick bar sliding in from below */}
         <motion.div
