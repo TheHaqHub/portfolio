@@ -5,7 +5,7 @@ export default function ExperienceCard({ exp }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border border-hairline rounded-sm bg-panel overflow-hidden h-full flex flex-col">
+    <div className="border border-hairline rounded-sm bg-panel overflow-hidden">
       <div className="flex items-center gap-1.5 px-5 py-3 border-b border-hairline bg-panel2 font-mono text-xs text-faint">
         <span className="w-2 h-2 rounded-full bg-hairline" />
         <span className="w-2 h-2 rounded-full bg-hairline" />
@@ -13,7 +13,7 @@ export default function ExperienceCard({ exp }) {
         <span className="ml-2 truncate">{exp.id}</span>
       </div>
 
-      <div className="p-6 flex-1 flex flex-col">
+      <div className="p-6">
         <h3 className="font-display text-xl text-ink">{exp.org}</h3>
         <p className="text-sm text-signal mt-1">{exp.role}</p>
         <p className="mt-3 text-[14.5px] text-muted leading-relaxed">{exp.summary}</p>
@@ -52,7 +52,7 @@ export default function ExperienceCard({ exp }) {
           </>
         )}
 
-        <div className="mt-auto pt-4 flex flex-wrap gap-2">
+        <div className="mt-5 pt-4 border-t border-hairline flex flex-wrap gap-2">
           {exp.tags.map((t) => (
             <span
               key={t}

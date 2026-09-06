@@ -35,7 +35,7 @@ export default function MobileCarousel({ items, renderItem, keyExtractor }) {
     <div>
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex items-start gap-4 overflow-x-auto overscroll-x-contain snap-x snap-mandatory pb-2 -mx-6 px-6 [touch-action:pan-x] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {items.map((item, i) => (
           <div key={keyExtractor(item, i)} className="shrink-0 w-[86vw] snap-center">

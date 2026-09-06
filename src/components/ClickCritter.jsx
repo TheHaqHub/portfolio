@@ -50,10 +50,12 @@ export default function ClickCritter() {
   useEffect(() => {
     if (reduced) return;
 
-    const onDown = (e) => {
-      const point = e.touches ? e.touches[0] : e;
+    // Uses "click" (not pointerdown/touchstart) so a scroll or swipe gesture
+    // never triggers this — click only fires on a genuine tap/press that
+    // ends roughly where it started, exactly the distinction we need.
+    const onTap = (e) => {
       const from = lastPos.current;
-      const to = { x: point.clientX, y: point.clientY };
+      const to = { x: e.clientX, y: e.clientY };
       const dist = Math.hypot(to.x - from.x, to.y - from.y);
 
       // Gentle, unhurried walking pace — not an instant jump.
@@ -70,9 +72,9 @@ export default function ClickCritter() {
       walkTimer.current = window.setTimeout(() => setWalking(false), walkDuration * 1000);
     };
 
-    window.addEventListener("pointerdown", onDown);
+    window.addEventListener("click", onTap);
     return () => {
-      window.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("click", onTap);
       window.clearTimeout(walkTimer.current);
     };
   }, [reduced]);

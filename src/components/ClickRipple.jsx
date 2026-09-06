@@ -12,15 +12,17 @@ export default function ClickRipple() {
 
   useEffect(() => {
     if (reduced) return;
-    const onDown = (e) => {
+    // "click" (not pointerdown) so a scroll/swipe gesture never triggers a
+    // ripple — only a genuine tap that ends where it started.
+    const onTap = (e) => {
       const id = idCounter++;
       setRipples((r) => [...r, { id, x: e.clientX, y: e.clientY }]);
       window.setTimeout(() => {
         setRipples((r) => r.filter((rp) => rp.id !== id));
       }, 650);
     };
-    window.addEventListener("pointerdown", onDown);
-    return () => window.removeEventListener("pointerdown", onDown);
+    window.addEventListener("click", onTap);
+    return () => window.removeEventListener("click", onTap);
   }, [reduced]);
 
   if (reduced) return null;
