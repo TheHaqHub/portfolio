@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 
-const START = { x: 26, y: 58 }; // near the logo — where the cat first wanders in from
-
 function Cat() {
   return (
     <svg width="34" height="30" viewBox="0 0 34 30" fill="none">
@@ -40,11 +38,11 @@ function Cat() {
 export default function ClickCritter() {
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(false);
-  const [target, setTarget] = useState(START);
+  const [target, setTarget] = useState({ x: 0, y: 0 });
   const [duration, setDuration] = useState(1.2);
   const [flip, setFlip] = useState(false);
   const [walking, setWalking] = useState(false);
-  const lastPos = useRef(START);
+  const lastPos = useRef(null); // null until the cat has appeared once
   const walkTimer = useRef(null);
 
   useEffect(() => {
@@ -54,10 +52,19 @@ export default function ClickCritter() {
     // never triggers this — click only fires on a genuine tap/press that
     // ends roughly where it started, exactly the distinction we need.
     const onTap = (e) => {
-      const from = lastPos.current;
-      const to = { x: e.clientX, y: e.clientY };
-      const dist = Math.hypot(to.x - from.x, to.y - from.y);
+      // pageX/pageY (not clientX/clientY) — these are DOCUMENT coordinates,
+      // already including scroll offset. Using these instead of viewport
+      // coordinates is what makes the cat stay anchored to the spot on the
+      // page you tapped, scrolling right along with the content, instead of
+      // staying glued to a fixed spot on screen.
+      const to = { x: e.pageX, y: e.pageY };
 
+      // First appearance ever: walk in from near the logo's current
+      // on-screen position, converted to the equivalent document position
+      // at this exact scroll offset (the logo itself is screen-fixed).
+      const from = lastPos.current ?? { x: 26, y: 58 + window.scrollY };
+
+      const dist = Math.hypot(to.x - from.x, to.y - from.y);
       // Gentle, unhurried walking pace — not an instant jump.
       const walkDuration = Math.min(2.8, Math.max(0.9, dist / 380));
 
@@ -82,12 +89,12 @@ export default function ClickCritter() {
   if (reduced || !visible) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[95] overflow-hidden">
+    <div className="pointer-events-none absolute top-0 left-0 w-full z-[95]">
       <motion.div
         animate={{ x: target.x, y: target.y }}
         transition={{ duration, ease: [0.45, 0.05, 0.55, 0.95] }}
         className="absolute top-0 left-0"
-        style={{ marginLeft: -17, marginTop: -20, scaleX: flip ? -1 : 1 }}
+        style={{ marginLeft: -17, marginTop: -34, scaleX: flip ? -1 : 1 }}
       >
         <motion.div
           animate={
