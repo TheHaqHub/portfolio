@@ -4,7 +4,11 @@ const STACK = ["JavaScript", "React", "Node.js", "Express.js", "MongoDB", "REST 
 
 export default function TechMarquee() {
   const reduced = useReducedMotion();
-  const items = [...STACK, ...STACK];
+  // Duplicated 4x (not 2x) so the total strip is always comfortably wider
+  // than even large desktop/ultra-wide viewports — with only 2 copies, a
+  // wide screen could show more of the container's width than the content
+  // covers, exposing a brief blank gap at the loop point.
+  const items = [...STACK, ...STACK, ...STACK, ...STACK];
 
   return (
     <div className="border-y border-hairline bg-panel overflow-hidden py-4 group">

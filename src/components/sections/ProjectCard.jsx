@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 
-export default function ProjectCard({ project, index }) {
+export default function ProjectCard({ project, index, static: isStatic = false }) {
   const ref = useRef(null);
   const glareRef = useRef(null);
 
@@ -29,10 +29,11 @@ export default function ProjectCard({ project, index }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24, scale: 0.97 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      initial={isStatic ? false : { opacity: 0, y: 24, scale: 0.97 }}
+      animate={isStatic ? { opacity: 1, y: 0, scale: 1 } : undefined}
+      whileInView={isStatic ? undefined : { opacity: 1, y: 0, scale: 1 }}
+      viewport={isStatic ? undefined : { once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, delay: isStatic ? 0 : (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
       ref={ref}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
@@ -85,10 +86,11 @@ export default function ProjectCard({ project, index }) {
           {project.stack.map((s, si) => (
             <motion.span
               key={s}
-              initial={{ opacity: 0, y: 6 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: si * 0.025 }}
+              initial={isStatic ? false : { opacity: 0, y: 6 }}
+              whileInView={isStatic ? undefined : { opacity: 1, y: 0 }}
+              animate={isStatic ? { opacity: 1, y: 0 } : undefined}
+              viewport={isStatic ? undefined : { once: true }}
+              transition={{ duration: 0.3, delay: isStatic ? 0 : si * 0.025 }}
               className="font-mono text-[10.5px] px-2 py-1 rounded-sm border border-hairline text-faint group-hover:border-hairline transition-colors"
             >
               {s}

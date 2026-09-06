@@ -50,71 +50,79 @@ export default function Nav() {
   }, [open]);
 
   return (
-    <motion.header
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-base/90 backdrop-blur border-b border-hairline" : "bg-transparent"
-      }`}
-    >
-      <nav className="container-x flex items-center justify-between h-16">
-        <a href="#top" className="font-display text-lg tracking-tight text-ink group">
-          Abdul
-          <motion.span
-            className="text-signal inline-block"
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            .
-          </motion.span>
-          Haq
-        </a>
+    <>
+      <motion.header
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
+          scrolled ? "bg-base/90 backdrop-blur border-b border-hairline" : "bg-transparent"
+        }`}
+      >
+        <nav className="container-x flex items-center justify-between h-16">
+          <a href="#top" className="font-display text-lg tracking-tight text-ink group">
+            Abdul
+            <motion.span
+              className="text-signal inline-block"
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              .
+            </motion.span>
+            Haq
+          </a>
 
-        <div className="hidden md:flex items-center gap-8 font-mono text-[13px] text-muted">
-          {LINKS.map((l) => (
-            <NavLink key={l.href} href={l.href} label={l.label} />
-          ))}
-          <motion.a
-            href={profile.github}
-            target="_blank"
-            rel="noreferrer"
-            whileHover={{ y: -2 }}
-            transition={{ duration: 0.2 }}
-            className="text-ink border border-hairline rounded-sm px-3 py-1.5 hover:border-signal hover:text-signal transition-colors"
-          >
-            GitHub
-          </motion.a>
-          <ThemeToggle />
-        </div>
+          <div className="hidden md:flex items-center gap-8 font-mono text-[13px] text-muted">
+            {LINKS.map((l) => (
+              <NavLink key={l.href} href={l.href} label={l.label} />
+            ))}
+            <motion.a
+              href={profile.github}
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ y: -2 }}
+              transition={{ duration: 0.2 }}
+              className="text-ink border border-hairline rounded-sm px-3 py-1.5 hover:border-signal hover:text-signal transition-colors"
+            >
+              GitHub
+            </motion.a>
+            <ThemeToggle />
+          </div>
 
-        <div className="md:hidden flex items-center gap-4">
-        <ThemeToggle />
-        <button
-          className="relative z-[110] text-ink flex flex-col items-end gap-[5px] w-6"
-          aria-label="Toggle menu"
-          aria-expanded={open}
-          onClick={() => setOpen((o) => !o)}
-        >
-          <motion.span
-            animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-            className="h-[1.5px] w-6 bg-current"
-          />
-          <motion.span
-            animate={open ? { opacity: 0 } : { opacity: 1 }}
-            transition={{ duration: 0.15 }}
-            className="h-[1.5px] w-4 bg-current"
-          />
-          <motion.span
-            animate={open ? { rotate: -45, y: -6, width: 24 } : { rotate: 0, y: 0, width: 6 }}
-            transition={{ duration: 0.25 }}
-            className="h-[1.5px] bg-current"
-          />
-        </button>
-        </div>
-      </nav>
+          <div className="md:hidden flex items-center gap-4">
+            <ThemeToggle />
+            <button
+              className="relative z-[110] text-ink flex flex-col items-end gap-[5px] w-6"
+              aria-label="Toggle menu"
+              aria-expanded={open}
+              onClick={() => setOpen((o) => !o)}
+            >
+              <motion.span
+                animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.25 }}
+                className="h-[1.5px] w-6 bg-current"
+              />
+              <motion.span
+                animate={open ? { opacity: 0 } : { opacity: 1 }}
+                transition={{ duration: 0.15 }}
+                className="h-[1.5px] w-4 bg-current"
+              />
+              <motion.span
+                animate={open ? { rotate: -45, y: -6, width: 24 } : { rotate: 0, y: 0, width: 6 }}
+                transition={{ duration: 0.25 }}
+                className="h-[1.5px] bg-current"
+              />
+            </button>
+          </div>
+        </nav>
+      </motion.header>
 
+      {/* Mobile overlay lives OUTSIDE the header on purpose — the header has
+          a Framer Motion `y` entrance transform on it, and any transform
+          (even a settled, no-op one) creates a new containing block for
+          descendant `position: fixed` elements. Nested here, "fixed inset-0"
+          would resolve against the header's own small box instead of the
+          viewport, squashing the overlay into a thin strip. */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -160,6 +168,6 @@ export default function Nav() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 }

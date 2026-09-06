@@ -23,7 +23,7 @@ export default function Projects() {
           <MobileCarousel
             items={projects}
             keyExtractor={(p) => p.id}
-            renderItem={(p, i) => <ProjectCard project={p} index={i} />}
+            renderItem={(p, i) => <ProjectCard project={p} index={i} static />}
           />
         </div>
 

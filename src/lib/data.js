@@ -51,6 +51,23 @@ export const quotes = [
   { text: "Debugging is twice as hard as writing the code in the first place.", author: "Brian Kernighan" },
   { text: "Code is like humor. When you have to explain it, it's bad.", author: "Cory House" },
   { text: "A good API is not just easy to use but also hard to misuse.", author: "Josh Bloch" },
+  { text: "Simplicity is the soul of efficiency.", author: "Austin Freeman" },
+  { text: "There are only two hard things in computer science: cache invalidation and naming things.", author: "Phil Karlton" },
+  { text: "Walking on water and developing software from a specification are easy if both are frozen.", author: "Edward V. Berard" },
+  { text: "The most disastrous thing that you can ever learn is your first programming language.", author: "Alan Kay" },
+  { text: "Deleted code is debugged code.", author: "Jeff Sickel" },
+  { text: "Optimism is an occupational hazard of programming; feedback is the treatment.", author: "Kent Beck" },
+  { text: "It's not a bug, it's an undocumented feature.", author: "Anonymous" },
+  { text: "Testing leads to failure, and failure leads to understanding.", author: "Burt Rutan" },
+  { text: "Good code is its own best documentation.", author: "Steve McConnell" },
+  { text: "Code never lies, comments sometimes do.", author: "Ron Jeffries" },
+  { text: "Before software can be reusable it first has to be usable.", author: "Ralph Johnson" },
+  { text: "The function of good software is to make the complex appear simple.", author: "Grady Booch" },
+  { text: "Weeks of coding can save you hours of planning.", author: "Anonymous" },
+  { text: "Truth can only be found in one place: the code.", author: "Robert C. Martin" },
+  { text: "Fix the cause, not the symptom.", author: "Steve Maguire" },
+  { text: "The sooner you start to code, the longer the program will take.", author: "Roy Carlson" },
+  { text: "Measuring programming progress by lines of code is like measuring aircraft building progress by weight.", author: "Bill Gates" },
 ];
 
 export const skillCategories = [
