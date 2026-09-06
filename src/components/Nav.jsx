@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { profile } from "../lib/data";
 import ThemeToggle from "./ThemeToggle";
+import Magnetic from "./Magnetic";
 
 const LINKS = [
   { href: "#about", label: "About" },
@@ -55,7 +56,7 @@ export default function Nav() {
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
+        className={`fixed top-0 inset-x-0 z-[105] transition-colors duration-300 ${
           scrolled ? "bg-base/90 backdrop-blur border-b border-hairline" : "bg-transparent"
         }`}
       >
@@ -76,16 +77,15 @@ export default function Nav() {
             {LINKS.map((l) => (
               <NavLink key={l.href} href={l.href} label={l.label} />
             ))}
-            <motion.a
+            <Magnetic
               href={profile.github}
               target="_blank"
               rel="noreferrer"
-              whileHover={{ y: -2 }}
-              transition={{ duration: 0.2 }}
-              className="text-ink border border-hairline rounded-sm px-3 py-1.5 hover:border-signal hover:text-signal transition-colors"
+              strength={0.35}
+              className="inline-block text-ink border border-hairline rounded-sm px-3 py-1.5 hover:border-signal hover:text-signal transition-colors"
             >
               GitHub
-            </motion.a>
+            </Magnetic>
             <ThemeToggle />
           </div>
 
